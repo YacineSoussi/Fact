@@ -3,7 +3,7 @@ api_platform:
         paths: ['%kernel.project_dir%/src/Entity']
     collection:
         pagination:
-            enabled: true
+            enabled: false
             items_per_page: 5
             client_enabled: true
             client_items_per_page: true
