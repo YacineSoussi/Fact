@@ -1,5 +1,4 @@
 import React, { useEffect, useState} from 'react';
-import axios from "axios";
 import Pagination from '../components/Pagination';
 import InvoicesAPI from "../services/InvoicesAPI";
 import moment from "moment";
@@ -109,9 +108,9 @@ const InvoicesPage = (props) => {
                 <td><a href="#">{invoice.customer.firstName} {invoice.customer.lastName}</a></td>
                 <td>{formatDate(invoice.sentAt)}</td>
                 <td className="text-center">
-                    <span className={"badge badge-" + STATUS_CLASSES[invoice.status]}> {STATUS_LABELS[invoice.status]} </span> 
+                <span className={"badge badge-" + STATUS_CLASSES[invoice.status]}> {STATUS_LABELS[invoice.status]} </span>
                 </td>
-                <td className="text-center"><span className="badge badge-primary">{invoice.invoices.length}</span></td>
+                
                 <td className="text-center">{invoice.amount.toLocaleString()}</td>
                 <td>
                     <button className="btn btn-sm btn-primary mr-1">Éditer</button>
