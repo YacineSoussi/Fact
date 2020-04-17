@@ -3,6 +3,7 @@ import customersAPI from "../services/customersAPI";
 import authAPI from "../services/authAPI";
 import axios from "axios";
 import Field from "../components/forms/Field";
+import { toast } from "react-toastify";
 
 const LoginPage = ({ onLogin, history }) => {
   const [credentials, setCredentials] = useState({
@@ -26,11 +27,13 @@ const LoginPage = ({ onLogin, history }) => {
       await authAPI.authenticate(credentials);
       setError("");
       onLogin(true);
+      toast.success("Vous êtes désormais connecté")
       history.replace("/customers");
     } catch (error) {
       setError(
         "Aucun compte ne possède cette adresse email ou alors les informations ne correspondent pas"
       );
+      toast.error("Une erreur est survenue")
     }
   };
 

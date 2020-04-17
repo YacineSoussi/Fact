@@ -3,6 +3,7 @@ import Pagination from '../components/Pagination';
 import InvoicesAPI from "../services/InvoicesAPI";
 import Moment from "moment";
 import { Link } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 const STATUS_CLASSES = {
     PAID: "success",
@@ -30,6 +31,7 @@ const InvoicesPage = (props) => {
             setInvoices(data)
         } catch(error) {
             console.log(error.response)
+            toast.error("Erreur lors du chargement des factures");
         }
     }
 
@@ -49,7 +51,9 @@ const InvoicesPage = (props) => {
 
         try {
             await InvoicesAPI.delete(id)
+            toast.success("La facture a bien été supprimé");
         } catch(error) {
+            toast.error("Une erreur est survenue");
             setinvoices(originalInvoices);
         }
        
@@ -110,7 +114,7 @@ const InvoicesPage = (props) => {
             {paginatedInvoices.map(invoice => <tr key={invoice.id}>
 
                 <td>{invoice.chrono}</td>
-                <td><a href="#">{invoice.customer.firstName} {invoice.customer.lastName}</a></td>
+                <td><Link to={"/customers/" + invoice.customer.id}>{invoice.customer.firstName} {invoice.customer.lastName}</Link></td>
                 <td>{formatDate(invoice.sentAt)}</td>
                 <td className="text-center">
                 <span className={"badge badge-" + STATUS_CLASSES[invoice.status]}> {STATUS_LABELS[invoice.status]} </span>

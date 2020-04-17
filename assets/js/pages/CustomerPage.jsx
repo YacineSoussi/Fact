@@ -32,8 +32,7 @@ const CustomerPage = ({ match, history }) => {
       setCustomer({ firstName, lastName, email, company });
       //setLoading(false);
     } catch (error) {
-      console.log(error.response);
-      //toast.error("Le client n'a pas pu être chargé");
+      toast.error("Le client n'a pas pu être chargé");
       history.replace("/customers");
     }
   };
@@ -58,14 +57,17 @@ const CustomerPage = ({ match, history }) => {
     event.preventDefault();
 
     try {
+      setErrors([]);
       if (editing) {
         await CustomersAPI.update(id, customer);
+        toast.success("Le client a bien été crée")
+        history.replace("/customers");
       } else {
         await CustomersAPI.create(customer);
         history.replace("/customers");
       }
 
-      setErrors([]);
+      
     } catch ({ response }) {
       const { violations } = response.data;
 
@@ -76,7 +78,7 @@ const CustomerPage = ({ match, history }) => {
         });
 
         setErrors(apiErrors);
-        //toast.error("Des erreurs dans votre formulaire !");
+        toast.error("Des erreurs dans votre formulaire !");
       }
     }
   };

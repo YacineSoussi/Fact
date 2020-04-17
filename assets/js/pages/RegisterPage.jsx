@@ -37,7 +37,7 @@ const RegisterPage = ({ history }) => {
       apiErrors.passwordConfirm =
         "Votre confirmation de mot de passe n'est pas conforme avec le mot de passe original";
       setErrors(apiErrors);
-      //toast.error("Des erreurs dans votre formulaire !");
+      toast.error("Des erreurs dans votre formulaire !");
       return;
     }
 
@@ -46,7 +46,7 @@ const RegisterPage = ({ history }) => {
       setErrors({});
 
       // TODO : Flash success
-      //toast.success( "Vous êtes désormais inscrit, vous pouvez vous connecter !");
+      toast.success( "Vous êtes désormais inscrit, vous pouvez vous connecter !");
       history.replace("/login");
     } catch (error) {
       const { violations } = error.response.data;
@@ -57,7 +57,7 @@ const RegisterPage = ({ history }) => {
         });
         setErrors(apiErrors);
       }
-      //toast.error("Des erreurs dans votre formulaire !");
+      toast.error("Des erreurs dans votre formulaire !");
     }
   };
 

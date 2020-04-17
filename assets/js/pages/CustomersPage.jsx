@@ -2,6 +2,7 @@ import React, { useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
 import Pagination from '../components/Pagination';
 import CustomersAPI from "../services/customersAPI";
+import { toast } from 'react-toastify';
 
 const CustomersPage = (props) => {
 
@@ -15,7 +16,7 @@ const CustomersPage = (props) => {
             const data = await CustomersAPI.findAll()
             setCustomers(data)
         } catch(error) {
-            console.log(error.response)
+            toast.error("impossible de charger les clients")
         }
     }
         // Au chargement du composant on va chercher les customers
@@ -31,8 +32,10 @@ const CustomersPage = (props) => {
 
         try {
             await CustomersAPI.delete(id)
+            toast.success("Le client a bien été supprimé")
         } catch(error) {
             setCustomers(originalCustomers);
+            toast.error("La supression du client n'a pas pu fonctionner")
         }
        
     
@@ -93,7 +96,11 @@ const CustomersPage = (props) => {
             {paginatedCustomers.map(customer => <tr key={customer.id}>
 
                 <td>{customer.id}</td>
-                <td><a href="#">{customer.firstName} {customer.lastName}</a></td>
+                <td>
+                    <Link to={"/customers/" + customer.id}>
+                {customer.firstName} {customer.lastName}
+                </Link>
+                </td>
                 <td>{customer.email}</td>
                 <td>{customer.company}</td>
                 <td className="text-center"><span className="badge badge-primary">{customer.invoices.length}</span></td>
