@@ -1,7 +1,8 @@
 import React, { useEffect, useState} from 'react';
 import Pagination from '../components/Pagination';
 import InvoicesAPI from "../services/InvoicesAPI";
-import moment from "moment";
+import Moment from "moment";
+import { Link } from "react-router-dom";
 
 const STATUS_CLASSES = {
     PAID: "success",
@@ -32,7 +33,7 @@ const InvoicesPage = (props) => {
         }
     }
 
-    const formatDate = (str) => moment(str).format('DD/MM/YYYY');
+    const formatDate = (str) => Moment(str).format('DD/MM/YYYY');
 
 
 // Au chargement du composant on va chercher les invoices
@@ -85,7 +86,11 @@ const InvoicesPage = (props) => {
 
     return ( 
         <>
-    <h1>Liste des factures</h1> 
+        <div className="d-flex justify-content-between align-items-center">
+            <h1>Liste des factures</h1> 
+            <Link className="btn btn-primary" to="/invoices/new">Créer une facture</Link> 
+        </div>
+    
 
         <div className="form-group">
             <input type="text" onChange={handleSearch} value={search}className="form-control" placeholder="Rechercher.."/>
@@ -113,7 +118,8 @@ const InvoicesPage = (props) => {
                 
                 <td className="text-center">{invoice.amount.toLocaleString()}</td>
                 <td>
-                    <button className="btn btn-sm btn-primary mr-1">Éditer</button>
+                <Link to={"/invoices/" + invoice.id} className="btn btn-sm btn-primary mr-1">
+                    Éditer</Link>
                     <button 
                 onClick={() => handleDelete(invoice.id)}
                 className="btn btn-sm btn-danger">Supprimer</button> </td>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from 'react';
-import axios from "axios";
+import {Link} from "react-router-dom";
 import Pagination from '../components/Pagination';
 import CustomersAPI from "../services/customersAPI";
 
@@ -68,7 +68,11 @@ const CustomersPage = (props) => {
 
     return ( 
         <>
-    <h1>Liste des clients</h1> 
+        <div className=" mb-3 d-flex justify-content-between align-items-center">
+           <h1>Liste des clients</h1>
+           <Link to="/customers/new" className='btn btn-primary'>Créer un client</Link>   
+        </div>
+    
 
         <div className="form-group">
             <input type="text" onChange={handleSearch} value={search}className="form-control" placeholder="Rechercher.."/>
@@ -91,7 +95,7 @@ const CustomersPage = (props) => {
                 <td>{customer.id}</td>
                 <td><a href="#">{customer.firstName} {customer.lastName}</a></td>
                 <td>{customer.email}</td>
-                <td>{customer.entreprise}</td>
+                <td>{customer.company}</td>
                 <td className="text-center"><span className="badge badge-primary">{customer.invoices.length}</span></td>
                 <td className="text-center">{customer.totalAmount.toLocaleString()}</td>
                 <td><button 
