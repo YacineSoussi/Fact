@@ -3,6 +3,7 @@ import Field from "./../components/forms/Field";
 import { Link } from "react-router-dom";
 import Axios from "axios";
 import CustomersAPI from "../services/customersAPI";
+import FormContentLoader from "../components/loaders/FormContentLoader";
 
 const CustomerPage = ({ match, history }) => {
   const { id = "new" } = match.params;
@@ -22,6 +23,7 @@ const CustomerPage = ({ match, history }) => {
   });
 
   const [editing, setEditing] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // Récupération du customer en fonction de l'identifiant
   const fetchCustomer = async id => {
@@ -30,7 +32,7 @@ const CustomerPage = ({ match, history }) => {
         id
       );
       setCustomer({ firstName, lastName, email, company });
-      //setLoading(false);
+      setLoading(false);
     } catch (error) {
       toast.error("Le client n'a pas pu être chargé");
       history.replace("/customers");
@@ -40,7 +42,7 @@ const CustomerPage = ({ match, history }) => {
   // Chargement du customer si besoin au chargement du composant ou au changement de l'identifiant
   useEffect(() => {
     if (id !== "new") {
-      //setLoading(true);
+      setLoading(true);
       setEditing(true);
       fetchCustomer(id);
     }
@@ -88,6 +90,9 @@ const CustomerPage = ({ match, history }) => {
         <h1>Modification du client</h1>
       )}
 
+{loading && <FormContentLoader />}
+      {!loading && (
+
       <form onSubmit={handleSubmit}>
         <Field
           name="lastName"
@@ -132,6 +137,7 @@ const CustomerPage = ({ match, history }) => {
           </Link>
         </div>
       </form>
+      )}
     </>
   );
 };

@@ -4,6 +4,7 @@ import InvoicesAPI from "../services/InvoicesAPI";
 import Moment from "moment";
 import { Link } from "react-router-dom";
 import { toast } from 'react-toastify';
+import TableLoader from "../components/loaders/TableLoader";
 
 const STATUS_CLASSES = {
     PAID: "success",
@@ -22,13 +23,15 @@ const InvoicesPage = (props) => {
     const [invoices, setInvoices] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("");
+    const [loading, setLoading] = useState(true);
     
     //  Permet d'aller récuperer les invoices
 
     const fetchInvoices = async () => {
         try {
             const data = await InvoicesAPI.findAll()
-            setInvoices(data)
+            setInvoices(data);
+            setLoading(false);
         } catch(error) {
             console.log(error.response)
             toast.error("Erreur lors du chargement des factures");
@@ -131,6 +134,7 @@ const InvoicesPage = (props) => {
             
         </tbody>
     </table>
+    {loading && <TableLoader />}
 
     { ItemsPerPage < filteredInvoices.length && ( <Pagination 
     currentPage={currentPage} 

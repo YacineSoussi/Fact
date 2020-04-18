@@ -8,7 +8,8 @@ function findAll() {
 }
 
 function find(id) {
-    return axios.get("http://127.0.0.1:8000/api/invoices/" + id).then(response => response.data);
+    return axios.get("http://127.0.0.1:8000/api/invoices/" + id)
+    .then(response => response.data);
   }
 
 function deleteInvoice(id) {
